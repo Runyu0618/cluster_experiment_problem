@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My experiment</title>
+    <script src="jatos.js"></script>
+    <script src="https://unpkg.com/jspsych@8.2.1"></script>
+    <script src="js/jspsych-audio-tokens-v7.js"></script>
+    <script src="js/audio-tokens.js"></script>
+    <script src="//d3js.org/d3.v4.min.js"></script>
+    <link href="https://unpkg.com/jspsych@8.2.1/css/jspsych.css" rel="stylesheet" type="text/css" />
+    <script src="https://unpkg.com/@jspsych/plugin-html-button-response@2.1.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-instructions@2.1.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-survey-multi-choice@2.1.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-survey@2.1.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-preload@2.1.0"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@jspsych/plugin-survey@2.1.0/css/survey.css">
+</head>
+<body>
+<img src="UoG.jpeg" alt="UoG Logo" style="position:absolute; top:50px; left:10px; max-width:150px;" />
+      <div style="margin-left:180px;">
+</body>
+
+<script>
+
+
+    // ADDED: Information Letter page
+    var information_letter = {
+        type: jsPsychInstructions,
+   pages: [
+`<div style="max-width:800px; margin:auto; text-align:justify;">
+<h2 style="text-align:center">导语</h2>
+<h3 style="text-align:center">中国英语学习者对不同英语口音相似度的感知</h3>
+<p><strong>研究人员:</strong> 吴润玉<br/>
+语言与认知中心<br/>
+格罗宁根大学<br/>
+
+
+
+
+<h3>1. 简介</h3>
+<p>这部分包含了关于这项研究的重要信息和相关说明。在您决定是否参加之前，请仔细阅读。如果有任何疑问，请随时联系研究人员。</p>
+
+<h3>2. 这项研究是关于什么的？</h3>
+<h4>研究目的</h4>
+<p>本研究的目的是了解来自中国的英语学习者是如何感知不同英语口音之间的相似或差异。在这项研究中，我们想知道您认为哪些口音听起来相似，哪些却不同。这些结果将帮助我们在后续研究中更好地选择合适的口音，并深入了解口音感知和听懂程度之间的关系。</p>
+
+<h4>研究内容和时长</h4>
+<p>参与者需要听20段简短的英语音频（每段大约20–30秒），并根据自己对口音相似度的感知，将音频以拖拽的方式分到不同的组中。您可以自由决定分成多少组，每组里可以包含任意数量的音频。整个调查预计将花费10–15分钟。</p>
+
+<h3>3. 参与研究需要做什么？</h3>
+<h4>研究内容</h4>
+<p>在研究过程中，您需要听多种英语口音，并以拖拽的形式体现您觉得哪些口音相似，哪些口音不同。具体来说，您需要：</p>
+<ul>
+<li>听不同英语口音的音频</li>
+<li>根据您认为的相似度将音频分组</li>
+<li>整个实验过程中请务必佩戴耳机，并尽量在电脑上完成调查</li>
+</ul>
+
+<h4>可能的不适感</h4>
+<p>本研究没有任何已知风险。如果您回答过程中感到不舒服，可以随时退出。</p>
+
+<h3>4. 关于参与的更多信息</h3>
+<h4>完全自愿</h4>
+<p>参与本研究是完全自愿的。在提交问卷前，您可以选择不参与，也可以随时退出，退出不会产生任何负面影响，您也无需说明理由。</p>
+
+<h3>信息保密</h3>
+<p>在本研究中收集的所有信息将被严格保密。虽然我们会收集一些个人信息，例如性别和年龄，但这些信息仅用于研究目的，您的回答始终是匿名的，这意味着不会有任何信息直接将您的身份与数据关联。</p>
+
+<h3>研究数据管理</h3>
+<p>匿名的研究数据将被安全存储至少10年，仅研究人员可以访问这些数据。当研究结果发表或在会议上展示时，不会包含任何可以识别您身份的信息。我们收集的性别、年龄等个人信息是完全匿名的并仅用于数据分析。此外，本研究中收集的匿名数据可能会被用于未来的研究，以促进更广泛的学术理解，但这些数据不会包含任何可以透露您身份的信息。</p>
+
+<h3>数据处理</h3>
+<p>您的回答会被记录且始终是匿名的，仅用于本研究。请注意，您在本研究中的匿名答复也可能会被用于未来的研究中。</p>
+
+<h3>奖励与报酬</h3>
+<p>所有参与者自愿参与本研究。</p>
+
+<h3>伦理批准</h3>
+<p>本研究已通过格罗宁根大学伦理审查委员会（CETO）的审核 (ID: 105490494)。如有问题，您可联系 <a href="mailto:ceto@rug.nl">ceto@rug.nl</a>。</p>
+
+<h3>参与方式</h3>
+<p>如果您愿意参加本研究，请点击下一页的“我同意”按钮。</p>
+</div>`,
+  ],
+    button_label_next: "Continue",
+    button_label_previous: "Return to the dark side",
+        show_clickable_nav: true
+    };
+
+    // Information Letter 完成后
+var consent_form = {
+  type: jsPsychSurveyMultiChoice,
+  preamble: `
+    <div style="max-width:800px; margin:auto; text-align:justify;">
+  <h2 style="text-align:center">知情同意书</h2>
+  <p>我（参与者）通过签署这份知情同意书，确认我已阅读并理解了上一页的导语部分，并确认以下内容：</p>
+  <ul>
+    <li>我已阅读并理解了问卷中的导语部分。</li>
+    <li>我知道如果在实验开始前或结束实验后有任何问题，我可以联系研究人员。</li>
+    <li>我有足够的时间决定是否参与本研究。</li>
+    <li>我知道参与完全是自愿的。</li>
+    <li>我知道研究的时长为10到15分钟。</li>
+    <li>我知道在提交问卷之前，我可以随时退出研究，不会有任何负面后果，也无需提供理由。</li>
+    <li>我知道我的研究数据将按照导语中的说明进行处理，并且研究团队可以访问这些数据。</li>
+    <li>我知道我的匿名回答可能会被共享给其他研究人员用于未来的研究。</li>
+    
+  </ul>
+</div>
+
+  `,
+  questions: [
+    {
+      prompt: "选择“我同意”，您表示同意参与本研究:", 
+      name: "consent",
+      options: ["我同意", "我不同意"],
+      required: true
+    }
+  ],
+  
+  on_finish: function(data) {
+    var response = data.response.consent;
+    if (response === "我不同意") {
+      alert("You have selected '我不同意'. The experiment will now end.");
+      jsPsych.endExperiment();
+    }
+  }
+};
+
+// demographic_survey
+
+const demographic_survey = {
+  type: jsPsychSurvey,
+  survey_json: {
+    showQuestionNumbers: false,
+    pageNextText: 'Continue',
+    pagePrevText: 'Previous',
+    pages: [
+        
+      /* —— Page 1 —— 学生、年龄、性别 */
+      {
+        name: 'page1',
+        elements: [
+            {
+      type: 'html',
+      name: 'logo',
+      html: `
+       <div style="display:flex; align-items:flex-start;">
+      <img src="UoG.jpeg" alt="UoG Logo" style="max-width:150px;" />
+      <div style="margin-left:20px;">
+    `
+    },
+          {
+            type: 'radiogroup',
+            title: "您目前是学生吗 (例如，本科生、硕士生、博士生)?",
+            name: 'student_work',
+            choices: [
+              "是的，我目前是名学生。",
+              "不，我目前不是学生。",
+              "其他（请描述）"
+            ],
+            
+            isRequired: true
+          },
+          {
+          type: 'text',
+          title: "如果您选择了“其他”，请在此填写具体情况：",
+          name: 'student_work_other',
+          visibleIf: "{student_work} = '其他（请描述）'",
+          isRequired: true
+          },
+
+          {
+            type: 'radiogroup',
+            title: "您的年龄是？",
+            name: 'age',
+            choices: [
+              "18–20",
+              "21–23",
+              "24–26",
+              "27–29",
+              "30+"
+            ],
+            isRequired: true
+          },
+          {
+            type: 'radiogroup',
+            title: "您的性别是？",
+            name: 'gender',
+            choices: [
+              "女性",
+              "男性",
+              "非二元性别 / 第三性别",
+              "不愿透露"
+            ],
+            isRequired: true
+          }
+        ]
+      },
+      /* —— Page 2 —— 学历和英语学习年限 */
+      {
+        name: 'page2',
+        elements: [
+            {
+      type: 'html',
+      name: 'logo',
+      html: `
+       <div style="display:flex; align-items:flex-start;">
+      <img src="UoG.jpeg" alt="UoG Logo" style="max-width:150px;" />
+      <div style="margin-left:20px;">
+    `
+    },
+          {
+            type: 'radiogroup',
+            title: "您目前的学习阶段是什么？不是学生的话，在’其他‘里注明即可。",
+            name: 'level_of_study',
+            choices: [
+              "本科",
+              "硕士生",
+              "博士生",
+              "其他（请描述）"
+            ],
+            
+            isRequired: true
+          },
+          {
+          type: 'text',
+          title: "如果您选择了“其他”，请在此填写具体情况：",
+          name: 'level_of_study_other',
+          visibleIf: "{level_of_study} = '其他（请描述）'",
+          isRequired: true
+          },
+
+          {
+            type: 'text',
+            title: "您所学的专业是？",
+            name: 'major',
+            isRequired: true
+          },
+          {
+            type: 'radiogroup',
+            title: "您学习英语多久了？",
+            name: 'years_of_english',
+            choices: [
+              "少于9年",
+              "9-13年",
+              "14-17年",
+              "18年以上",
+              "其他（请描述）"
+            ],
+            isRequired: true
+          },
+          {
+          type: 'text',
+          title: "如果您选择了“其他”，请在此填写具体情况：",
+          name: 'years_of_english_other',
+          visibleIf: "{years_of_english} = '其他（请描述）'",
+          isRequired: true
+          },
+        ]
+      },
+      /* —— Page 3 —— 考试类型、分数、是否访问过说英语的国家 */
+      {
+        name: 'page3',
+        elements: [
+            {
+      type: 'html',
+      name: 'logo',
+      html: `
+       <div style="display:flex; align-items:flex-start;">
+      <img src="UoG.jpeg" alt="UoG Logo" style="max-width:150px;" />
+      <div style="margin-left:20px;">
+    `
+    },
+          {
+          type: 'radiogroup',
+          title: "请提供您的英语考试成绩以表明您的英语水平。考试类型：",
+          name: 'exam_type',
+          choices: [
+         "雅思",
+         "托福",
+         "大学四级",
+         "大学六级",
+         "专四",
+         "专八",
+         "PTE",
+         "高考",
+         "其他（请描述）"
+        ],
+        isRequired: true
+        },
+        {
+        type: 'text',
+        title: "如果您选择了“其他”，请在此填写具体情况：",
+        name: 'exam_type_other',
+        visibleIf: "{exam_type} = '其他（请描述）'",
+        isRequired: true
+        },
+
+          {
+            type: 'text',
+            title: "分数：",
+            name: 'score',
+            isRequired: true
+          },
+          {
+            type: 'radiogroup',
+            title: "您曾去过或者目前正在任何英语国家吗？",
+            name: 'englishcountry_if',
+            choices: ["去过", "没去过"],
+            isRequired: true
+          },
+          {
+            type: 'text',
+            title: "如果您曾经去过任何英语国家，请注明您所访问的国家、城市以及每个地点的停留时间。",
+            name: 'englishcountry_specification',
+            isRequired: true,
+            visibleIf: "{englishcountry_if} = '去过'"
+          }
+        ]
+      }
+    ]
+  }
+};
+
+
+
+
+  
+    // Glasgow + Australia
+    var stimuli1 = [
+  'my_audio/Australia1.mp3',
+  'my_audio/glasgow1.mp3',
+  'my_audio/India1.mp3',
+  'my_audio/Ireland1.mp3',
+  'my_audio/Japan1.mp3',
+  'my_audio/Manchester1.mp3',
+  'my_audio/Mandarin1.mp3',
+  'my_audio/Northern Ireland1.mp3',
+  'my_audio/NZE1.mp3',
+  'my_audio/South Africa1.mp3',
+  'my_audio/Australia2.mp3',
+  'my_audio/glasgow2.mp3',
+  'my_audio/India2.mp3',
+  'my_audio/Ireland2.mp3',
+  'my_audio/Japan2.mp3',
+  'my_audio/Manchester2.mp3',
+  'my_audio/Mandarin2.mp3',
+  'my_audio/Northern Ireland2.mp3',
+  'my_audio/NZE2.mp3',
+  'my_audio/South Africa2.mp3'
+];
+
+
+//pratice audio
+
+ var stimuli2 = [
+    'my_audio备用/English69.mp3',
+    'my_audio备用/Leeds1.mp3',
+    'my_audio备用/English77.mp3',
+    'my_audio备用/Leeds2.mp3'
+];
+
+var preload = {
+  type: jsPsychPreload,
+  auto_preload: true
+};
+
+
+    var perceptual_instructions = {
+  type: jsPsychInstructions,
+  pages: [
+    `<div style="max-width:800px; margin:auto; text-align:justify;">
+  <h2 style="text-align:center">口音听觉相似性任务说明</h2>
+  <p>您将听到 20 段简短的英语音频，它们代表 10 种不同的英语口音（每一个圆点代表一段音频）。</p>
+  <p>每段音频的内容是：<br/>
+  “Please call Stella. Ask her to bring these things with her from the store:  
+  Six spoons of fresh snow peas, five thick slabs of blue cheese, and maybe a snack for her brother Bob. We also need a small plastic snake and a big toy frog for the kids.  
+  She can scoop these things into three red bags, and we will go meet her Wednesday at the train station.”</p>
+  <p>您需要做的事情：</p>
+  <ol>
+    <li><strong>播放音频：</strong> 将鼠标移动到圆点上（不用点击）即可播放对应的音频。您可以根据需要反复收听每段音频。</li>
+    <li><strong>分组：</strong> 将您认为发音相似的圆点拖拽到一起，放入同一组中。
+    当您拖动圆点时，如果圆点之间出现连线，说明它们已被分为同一组。
+    拖动圆点时没有出现连线，说明您将它们视为不同组。<br/>
+    注意：当您松开圆点后，这条连线会消失，这是正常现象，它们依然会被记录为同一组。</li>
+  </ol>
+  <p>您可以自由决定分成多少组，每组里可以包含任意数量的音频。组内圆点之间的距离并不重要——只要它们属于同一组，它们就会被视为相似。</p>
+  <p>下面是一个示例图片，展示了音频分组的方式（这只是一张示例图片，您不能点击它进行操作）：</p>
+  <div style="text-align:center;">
+    <img src="figure_cluster.png" alt="分组示例图片" style="max-width:600px;">
+  </div>
+</div>
+`,
+  ],
+  show_clickable_nav: true,
+  button_label_next: "Continue",
+  button_label_previous: "Previous"
+};
+
+// practice
+
+    var practice = {
+    type: jsPsychAudioTokens,
+    ratingtype: 'cluster',
+    stimuli: stimuli2,
+    force_listen: false,
+    loop: true,
+    prompt: `
+      <div style="font-size:14px; line-height:1.0; margin-top:30px;">
+         <p>这只是一道练习题目，用于帮助您熟悉任务流程。您对此题的回答不会被记录。</p>
+      <p>您觉得哪些口音听起来比较像？请将这些音频按照相似程度拖拽分组。拖拽时圆点之间出现连线，才会被视为一组。</p>
+      <p>音频无法播放？ <strong>请耐心等待10秒。</strong></p>
+    </div>
+  `
+};
+
+var practice_instructions = {
+  type: jsPsychInstructions,
+  pages: [
+    `<div style="max-width:800px; margin:auto; text-align:justify;">
+      <p>练习环节已经结束。接下来的页面是正式题目：只有一道题。请像练习时那样，继续回答接下来的问题。</p>
+    </div>`,
+  ],
+  show_clickable_nav: true,
+  button_label_next: "Continue",
+  button_label_previous: "Previous"
+};
+
+
+    // Trial 1
+    var cluster_trial_1 = {
+    type: jsPsychAudioTokens,
+    ratingtype: 'cluster',
+    stimuli: stimuli1,
+    force_listen: false,
+    loop: true,
+    prompt: `
+      <div style="font-size:14px; line-height:1.0; margin-top:30px;">
+      <p>您觉得哪些口音听起来比较像？请将这些音频按照相似程度拖拽分组。拖拽时圆点之间出现连线，才会被视为一组。</p>
+       <p>音频无法播放? <strong>请耐心等待30秒。</strong></p>
+    </div>
+  `
+};
+
+
+    // Timeline
+var timeline = [
+        preload,
+        information_letter, 
+        consent_form,
+        demographic_survey,
+        perceptual_instructions,
+        practice,
+        practice_instructions,
+        cluster_trial_1
+    ];
+
+
+
+
+
+var jsPsych = initJsPsych({
+  show_progress_bar: true,
+  on_finish: function() {
+    // 先提交数据
+    jatos.submitResultData(jsPsych.data.get().json());
+    
+    // 显示自定义结束消息
+    jsPsych.getDisplayElement().innerHTML = 
+      '<div style="font-size: 20px; text-align: center; margin-top: 100px;">' +
+      '<h2>感谢您参与本实验！</h2>' +
+      '<p>您的回答已被记录。</p>' +
+      '</div>';
+    
+    // 结束实验但不跳转到JATOS结束页面
+    jatos.endStudyAjax();
+  }
+});
+
+
+
+    jsPsych.run(timeline);
+</script>
+</html>
